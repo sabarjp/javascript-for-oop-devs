@@ -14,7 +14,7 @@
 
         <p>
         This is a short introduction to JavaScript for people that are already well-versed
-        in object-oriented class-based programming languages such as Java, C#, or C++. I will 
+        in object-oriented class-based programming languages such as Java, C#, or C++. I will
         be going over what prior knowledge will be useful in JavaScript, and the prior knowledge
         that can get you in trouble.
         </p>
@@ -22,15 +22,15 @@
         <p>
         JavaScript is frequently regarded with disdain by people used to other languages. Many
         programmers go into JavaScript with no preparation and assume their OOP techniques will work, only
-        to run into various issues due to the inner workings of the language. I encourage the reader to 
+        to run into various issues due to the inner workings of the language. I encourage the reader to
         view JavaScript as a full language in its own right, instead of as a tool to manipulate web pages.
         </p>
 
         <h3>What JavaScript is</h3>
 
         <p>
-        JavaScript is a dynamically typed scripting language that primarily powers the web, 
-        though its usage outside of the browser is rapidly increasing. JavaScript was created in 
+        JavaScript is a dynamically typed scripting language that primarily powers the web,
+        though its usage outside of the browser is rapidly increasing. JavaScript was created in
         10 days by Brendan Eich. The syntax of JavaScript is derived from C, just as in Java/C#/C++.
         </p>
 
@@ -162,7 +162,7 @@ var add = function(x, y){
             <p>
             Those fluent in C#
             might be thinking they have nothing to worry about since the C# language has the <strong>var</strong> keyword, but
-            they should note that C# is still statically typed and that the var keyword just allows type inferrance. The 
+            they should note that C# is still statically typed and that the var keyword just allows type inferrance. The
             <strong>dynamic</strong> keyword in C# is much more like <strong>var</strong> in JavaScript.
             </p>
 
@@ -192,7 +192,7 @@ add(1, 2);                // allowed, returns 3
 add("goal", "keeper");    // allowed, returns "goalkeeper"
 add(1, "keeper");         // allowed, returns "1keeper"
         </div>
-        <p class="caption">This behavior is bizzare to someone used to static typing. The number being added to the string will 
+        <p class="caption">This behavior is bizzare to someone used to static typing. The number being added to the string will
         make more sense when we examine typing more in-depth.</p>
 
         <p>
@@ -236,7 +236,7 @@ shortLength(null);              // error: item is null
 /**
  * Returns half of the length of an Array
  *
- * @param {Array} item     The array to get the length of 
+ * @param {Array} item     The array to get the length of
  * @returns {Number}
  */
 function shortLength (item){
@@ -260,19 +260,19 @@ function shortLength (item){
 /**
  * Returns half of the length of an Array
  *
- * @param {Array} item     The array to get the length of 
+ * @param {Array} item     The array to get the length of
  * @returns {Number}
  */
 function shortLength (item){
     if ( item === undefined ) {
         throw "shortLength function missing parameter: 'item'";
-    } 
+    }
 
     if ( Object.prototype.toString.call(item) === '[object Array]' ) {
         return item.length / 2;
     } else {
         throw "'item' parameter is not an Array type";
-    }   
+    }
 }
         </div>
         <p class="caption">The type checked version of the function adds a lot of weight, but it does stop unintended behavior.</p>
@@ -342,9 +342,9 @@ public class Widget {
         <h3>The object chain</h3>
 
         <p>
-        In JavaScript, anything declared (variables and functions) is scoped to the object that the delcaration belongs to. 
+        In JavaScript, anything declared (variables and functions) is scoped to the object that the delcaration belongs to.
         If there is no object, then it gets bound to the global object (and it is then called globally scoped). This should be
-        familiar to programemrs of the C-like languages. The global object on the browser has the name <strong>window</strong> 
+        familiar to programemrs of the C-like languages. The global object on the browser has the name <strong>window</strong>
         and can be referred from anywhere.
         </p>
 
@@ -376,7 +376,7 @@ var CoolThing = function(){    // global scope
         </p>
 
         <div class="example code">
-window                          Object 
+window                          Object
    &#8627; x                      Number (5)
    &#8627; CoolThing       Function (Object)
        &#8627; x                  Number (2)
@@ -389,7 +389,7 @@ window                          Object
 
         <p>
         When declaring variables in JavaScript, they can be declared with or without the <strong>var</strong> keyword.
-        If the <strong>var</strong> keyword is used, then a new variable is created scoped to the object 
+        If the <strong>var</strong> keyword is used, then a new variable is created scoped to the object
         the variable belongs to. This behaves just like you would expect variable declaration to behave in say, Java.
         </p>
 
@@ -404,7 +404,7 @@ function(){
         </div>
 
         <p>
-        The tricky part happens if the <strong>var</strong> keyword is not used. The interpreter will first check for a 
+        The tricky part happens if the <strong>var</strong> keyword is not used. The interpreter will first check for a
         locally scoped variable to assign the value to. If none exists, then the parent object is checked, then the parent's parent
         and so on up the chain, until hitting the global object. The first variable it finds with the matching name will be
         assigned the value. If no assignment is possible (i.e., the name has not been used anywhere up the chain), then
@@ -420,12 +420,12 @@ var Pie = function(){
         </div>
 
         <p>
-        In the example above, <strong>Pie</strong> is a function bound to the global object. When the function declaration begins 
+        In the example above, <strong>Pie</strong> is a function bound to the global object. When the function declaration begins
         to be interpreted, the object chain looks like this:
         </p>
 
         <div class="example code">
-window                    Object 
+window                    Object
    &#8627; Pie       Function (Object)
         </div>
 
@@ -434,11 +434,11 @@ window                    Object
         </p>
 
         <ol>
-            <li>The variable declaration does not have the <strong>var</strong> keyword.</li> 
+            <li>The variable declaration does not have the <strong>var</strong> keyword.</li>
             <li>Check the object that the declaration belongs to for the <strong>x</strong> variable.</li>
             <li>It does not have an existing variable <strong>x</strong>.</li>
             <li>Next check the parent of the object, which is the global object.</li>
-            <li>The variable is not declared here either.</li> 
+            <li>The variable is not declared here either.</li>
             <li>Can't go any higher in the object chain, so create a new variable called <strong>x</strong> and bind it to the global object.</li>
         </ol>
 
@@ -478,10 +478,10 @@ String letters = "abc";
 final Function<Integer, Integer> myFunc = (x) -> x*x;
 
 x = 4;
-x = "a";   
+x = "a";
 // compile error, mis-matched types
 
-int z = x + y + isFun + letters + myFunc;  
+int z = x + y + isFun + letters + myFunc;
 // compile error, mis-matched types
             </div>
 
@@ -495,10 +495,10 @@ var letters = "abc";
 Func<int, int> myFunc = x => x*x;
 
 x = 4;
-x = "a";   
+x = "a";
 // compile error, mis-matched types
 
-var z = x + y + isFun + letters;  
+var z = x + y + isFun + letters;
 // compile error, mis-matched types
             </div>
 
@@ -512,7 +512,7 @@ var letters = 'abc';
 var myFunc = function(x){return x*x;};
 
 x = 4;
-x = "a";   
+x = "a";
 // x is now a String type set to "a", no error
 
 var z = x + y + isFun + letters + myFunc;
@@ -565,7 +565,7 @@ public class Point {
 
 var Point = function(){
     this.x = null;
-    this.y = null;  
+    this.y = null;
 };
             </div>
         </div>
