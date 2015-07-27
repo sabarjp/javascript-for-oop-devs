@@ -1,0 +1,53 @@
+body {
+    font-family: sans-serif;
+}
+
+p {
+    line-height: 1.6em;
+}
+
+section {
+    padding: 15px 5px;
+}
+
+aside {
+    padding: 15px;
+    background-color: #df8;
+}
+
+.caption {
+    font-size: 0.8em;
+    font-color: #999;
+    line-height: 1.2em;
+    font-style: italic;
+    margin-left: 30px;
+}
+
+.example.code {
+    font-family: monospace;
+    white-space: pre;
+    padding: 12px;
+
+    background-color: #eee;
+    margin-left: 30px;
+    overflow-x: auto;
+}
+
+.compares .example.compare {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 0;
+    overflow-x: hidden;
+}
+
+.code.java {
+    background-color: #cfc;
+}
+
+.code.c-sharp {
+    background-color: #ccf;
+}
+
+.code.javascript {
+    background-color: #fcc;
+}
