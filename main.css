@@ -12,15 +12,43 @@ section {
 
 aside {
     padding: 15px;
-    background-color: #df8;
+    background-color: #FFFCC9;
 }
 
-.caption {
-    font-size: 0.8em;
+code {
+    font-weight: bold;
+    font-size: 1.4em;
+    font-family: monospace;
+}
+
+code.java {
+    color: #5A33B3;
+}
+
+code.cs {
+    color: #33B393;
+}
+
+code.js {
+    color: #B33384;
+}
+
+figcaption {
     font-color: #999;
-    line-height: 1.2em;
+    line-height: 1.4em;
+    font-size: 0.9em;
+    margin-top: 15px;
+    padding-top: 5px;
+    font-family: sans-serif;
     font-style: italic;
-    margin-left: 30px;
+    white-space: normal;
+    border-top: 1px solid #333;
+}
+
+.content {
+    max-width: 880px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .example.code {
@@ -34,20 +62,22 @@ aside {
 }
 
 .compares .example.compare {
-    display: inline-block;
+    display: block;
     vertical-align: top;
     margin-left: 0;
     overflow-x: hidden;
+    width: 100%;
+    margin-bottom: 6px;
 }
 
 .code.java {
-    background-color: #cfc;
+    border: 4px solid #5A33B3;
 }
 
 .code.c-sharp {
-    background-color: #ccf;
+    border: 4px solid #33B393;
 }
 
 .code.javascript {
-    background-color: #fcc;
+    border: 4px solid #B33384;
 }

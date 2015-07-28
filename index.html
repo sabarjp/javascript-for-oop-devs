@@ -7,23 +7,51 @@
 </head>
 
 <body>
+<div class="content">
     <h1>JavaScript for OOP Developers</h1>
+
+    <p>Fork me on <a href="https://github.com/sabarjp/javascript-for-oop-devs">Github</a>!</p>
+
+    <nav id="toc">
+        <ul>
+            <li><a href="#introduction">Introduction</a></li>
+            <li><a href="#variables">Variables</a></li>
+            <li><a href="#dynamic-typing">Dynamic Typing</a></li>
+            <li><a href="#scoping">Scope</a></li>
+            <li><a href="#modules">Modules</a></li>
+            <li><a href="#duck-typing">Duck Typing</a></li>
+            <li><a href="#type-coercion">Type Coercion</a></li>
+            <li><a href="#object-definition">Object Definition</a>
+            <li><a href="#first-class-functions">First-class Functions</a>
+            <li><a href="#closures">Closures</a>
+        </ul>
+    </nav>
+
+<!--
+
+INTRODUCTION
+
+-->
 
     <section id="introduction">
         <h2>Introduction</h2>
 
         <p>
         This is a short introduction to JavaScript for people that are already well-versed
-        in object-oriented class-based programming languages such as Java, C#, or C++. I will
-        be going over what prior knowledge will be useful in JavaScript, and the prior knowledge
-        that can get you in trouble.
+        in object-oriented class-based programming languages such as Java or C#. Perhaps you are a student who
+        wishes you were doing something new instead of yet another Java data structures course, or perhaps
+        you belong to an organization that needs JavaScript developers but you only have .NET back-end devs.
+        Maybe you are just a curious hobbyist, wondering what all the JavaScript hype is about.
         </p>
 
         <p>
-        JavaScript is frequently regarded with disdain by people used to other languages. Many
+        JavaScript is frequently regarded with disdain by people raised in other languages. Many
         programmers go into JavaScript with no preparation and assume their OOP techniques will work, only
         to run into various issues due to the inner workings of the language. I encourage the reader to
         view JavaScript as a full language in its own right, instead of as a tool to manipulate web pages.
+        The web-page manipulation aspect of JavaScript is limited to just one section. You can create simulators
+        and web servers in JavaScript. You can even make desktop applications. Don't feel constrained by the browser!
+        JavaScript was born on the web, but its roots are expanding fast.
         </p>
 
         <h3>What JavaScript is</h3>
@@ -72,8 +100,335 @@
         </p>
     </section>
 
-    <section id="variable-declaration">
-        <h2>Variable declaration</h2>
+<!--
+
+VARIABLES
+
+-->
+
+    <section id="variables">
+        <h2>Variables</h2>
+
+        <div class="compares">
+            <p>Quick look</p>
+            <div class="example code compare java">
+<strong>Java</strong>
+
+int y = 4;
+            </div>
+
+            <div class="example code compare c-sharp">
+<strong>C#</strong>
+
+var y = 4;
+            </div>
+
+            <div class="example code compare javascript">
+<strong>JavaScript</strong>
+
+var y = 4;
+            </div>
+        </div>
+
+        <p>
+        In JavaScript, variables are declared with the <code>var</code> keyword, regardless of type.
+        </p>
+
+        <figure class="example code">
+<strong>JavaScript</strong>
+
+var i;            // undefined
+var i = 5;        // number
+var s = "abc";    // string
+var b = true;     // boolean
+var f = 5.443;    // number
+var n = null;     // null
+var o = {};       // Object
+            <figcaption>All the primitive types in JavaScript (so far!)</figcaption>
+        </figure>
+
+        <p>
+        The <code>undefined</code> type is actually a property of the global object. It represents anything
+        that has not been defined. This differs from the <code>null</code> type which represents something
+        that has been defined, but has no value.
+        </p>
+
+        <p>
+        Note that both the integer and decimal numbers are the same type, of <code>number</code>. Numbers
+        can also be represented in scientific notation, base16 and base08:
+        </p>
+
+        <figure class="example code">
+<strong>JavaScript</strong>
+
+var e = 4e3;      // scientific notation.   same as the number 4000
+var h = 0xff;     // base16 interpretation. same as the number 255
+var o = 0244;     // base08 interpretation. same as the number 164
+        </figure>
+
+        <p>
+        Take care with the octal literal notation! Literal numbers that begin with a zero are indeed
+        interpreted as being in base 8. This had been a source of countless errors and a bane of
+        many a JavaScript programmer.
+        </p>
+
+        <p>
+        This is probably a good time to mention that all JavaScript numbers are actually 64-bit floating
+        points. This means we don't have to worry about adding numbers of different types. The bad news is that integers
+        will lose precision after a while.
+        </p>
+
+        <figure class="example code">
+<strong>JavaScript</strong>
+
+var a = 9007199254740992;
+var b = a + 1;
+
+a === b;    // evaluates as true
+            <figcaption>This odd behavior is a side-effect of floating point representation. The precision at the whole-number
+            scale starts to fall off eventually. The good news? This should be quite rare.</figcaption>
+        </figure>
+
+        <p>
+        JavaScript also has <code>NaN</code>, <code>Infinity</code>, and <code>-Infinity</code>. Infinity and -Infinity are returned when you actually exceed
+        the range that the number type provides you. NaN is a result of certain math operations, such as zero divided by zero.
+        Dividing by zero returns Infinity and dividing by Infinity gives zero. The Infinity values are always greater or less
+        than every other number.
+        </p>
+
+        <figure class="example code">
+<strong>JavaScript</strong>
+
+2 / 0;                         // evaluates as Infinity
+0 / 0;                         // evaluates as NaN
+-2 / 0;                        // evaluates as -Infinity
+234324392847324 / Infinity;    // evaluates to 0
+Infinity * -1;                 // evaluates as -Infinity
+NaN === NaN;                   // evalutes as false; NaN is equal to nothing.
+isNaN(NaN);                    // evalutes to true
+
+            <figcaption>We will explore more in the section on type coercion.</figcaption>
+        </figure>
+
+        <p>
+        Moving onto strings, the JavaScript strings have some helper functions from the string prototype:
+        </p>
+
+        <figure class="example code">
+<strong>JavaScript</strong>
+
+var s = "I like ducks!";
+s.length;                  // 13
+s.toUpperCase();           // "I LIKE DUCKS"
+
+        </figure>
+
+        <p>
+        Also, strings can be declared with single quotes or double quotes. This is quite
+        useful when dealing with HTML, which has lots of double quotes in it. Any double quotes inside
+        of single quote strings do not need to be escaped.
+        </p>
+
+        <figure class="example code">
+<strong>JavaScript</strong>
+
+var s = "I like ducks!";
+var s = 'Me top!';
+
+var h = '&lt;div class="duck"&gt;&lt;/div&gt;';
+var k = "&lt;div class=\"duck\"&gt;&lt;/div&gt;";
+            <figcaption>Note that when using either single quotes or double quotes, using that same quote
+            character in the string itself requires escaping with a backslash character '\'.</figcaption>
+        </figure>
+
+        <p>
+        Objects are declared like the other primitives, using object literal notation:
+        </p>
+
+        <figure class="example code">
+<strong>JavaScript</strong>
+
+var address = {
+    number: 1234,
+    street: 'Main',
+    city: 'New York City',
+    rooms: {
+        bedroom: true,
+        bathroom: true,
+        guestroom: false
+    },
+    pets: [],
+    value: 500,
+    tax: function(){
+        return this.value * 0.10;
+    }
+};
+
+address.number;                // 1234     dot notation
+address['number'];             // 1234     bracket notation
+
+address.rooms.bedroom;         // true
+address['rooms']['bedroom'];   // true
+        </figure>
+
+        <p>
+        Note that objects can have other objects inside them, including functions!
+        </p>
+
+        <p>
+        Speaking of functions, they generally get assigned to variables too:
+        </p>
+
+        <figure class="example code">
+<strong>JavaScript</strong>
+
+var add = function(x, y){
+    return x + y;
+};
+        </figure>
+
+        <p>
+        All functions are objects in JavaScript, which is why this notation works. This makes functions in JavaScript
+        first-class citizens, as we will see later when we start passing around functions. Note that function declaration does
+        have another style:
+        </p>
+
+        <figure class="example code">
+<strong>JavaScript</strong>
+
+function add(x, y){
+    return x + y;
+};
+        </figure>
+
+        <p>
+        Whats the difference between both styles? Both functions get assigned to a variable named <code>add</code> and
+        their scope is also the same, but their availability is different. An example:
+        </p>
+
+        <figure class="example code">
+<strong>JavaScript</strong>
+
+add(1,2);             // works fine
+
+function add(x, y){
+    return x + y;
+};
+            <figcaption>This code works even though the function is declared after it is called. The interpreter
+            will find all functions like this and make sure they are available before code is ran.</figcaption>
+        </figure>
+
+        <p>
+        Compare to:
+
+        <figure class="example code">
+<strong>JavaScript</strong>
+
+add(1,2);             // error: add is undefined
+
+var add = function(x, y){
+    return x + y;
+};
+            <figcaption>This code fails because the variable 'add' has not been assigned yet.</figcaption>
+        </figure>
+
+        <p>
+        So what happens if we combine the two styles? It is allowed, but...
+        </p>
+
+        <figure class="example code">
+<strong>JavaScript</strong>
+
+addXtoY(1, 2);        // error: addXtoY is undefined
+
+var add = function addXtoY(x, y){
+    return x + y;
+};
+
+add(1,2);             // works fine
+addXtoY(1, 2);        // error: addXtoY is undefined
+            <figcaption>This code fails just as in the prior example. The original function name will not be
+            accessible (even after assignment!); the variable assignment overwrites it. </figcaption>
+        </figure>
+
+        <p>
+        So is the original function name in this style of assignment available anywhere? Yep, it is available to the function itself!
+        </p>
+
+        <figure class="example code">
+<strong>JavaScript</strong>
+
+var factorial = function ftl(x){
+    if (x === 1){
+        return 1;
+    }
+
+    return x * ftl(x - 1);
+};
+
+factorial(4);
+
+            <figcaption>In this recursive function, the original name of the function 'ftl' is available to the function itself.
+            The function is assigned to the variable 'factorial' outside of the function, where it is referred to as such. Note that
+            the function could refer to itself using 'factorial' in addition to 'ftl'!</figcaption>
+        </figure>
+
+        <p>
+        The best practice is to declare all functions with <code>var</code> unless you need the specific functionality given by the
+        other style.
+        </p>
+
+        <p>
+        Lets look at arrays now:
+        </p>
+
+        <figure class="example code">
+<strong>JavaScript</strong>
+
+var emptyArray = [];
+var filledArray = [1, 2, 3, 4, 5, 6];
+        </figure>
+
+        <p>
+        JavaScript has arrays, but these too are actually objects! JavaScript arrays tend to be much slower than their counterparts
+        in static languages. JavaScript arrays are fairly standard. They have a length attribute and some special Array prototype functions
+        for stuff like splicing, pushing, and popping.
+        </p>
+
+        <figure class="example code">
+<strong>JavaScript</strong>
+
+var a = [];
+a.length;      // 0
+a.push('bee');
+a.push('cat');
+a.length;      // 2
+a.pop();       // pops 'cat' off the top
+a.length;      // 1
+a[0];          // refers to 'bee' element
+        </figure>
+
+        <p>
+        JavaScript has a date type too. It is, as you might have guessed, also an object.
+        </p>
+
+        <figure class="example code">
+<strong>JavaScript</strong>
+
+var d = new Date();
+d.getTimezoneOffset();
+d.getHours();
+        </figure>
+    </section>
+
+<!--
+
+DYNAMIC TYPING
+
+-->
+
+    <section id="dynamic-typing">
+        <h2>Dynamic Typing</h2>
 
         <div class="compares">
             <p>Quick look</p>
@@ -82,7 +437,7 @@
 
 int productCount;
 String name = "Taylor";
-float x = 2.2;
+float x = 2.2F;
 int y = 4;
             </div>
 
@@ -90,9 +445,9 @@ int y = 4;
 <strong>C#</strong>
 
 int productCount;
-string name = "Taylor";
-float x = 2.2f;
-int y = 4;
+var name = "Taylor";
+var x = 2.2f;
+var y = 4;
             </div>
 
             <div class="example code compare javascript">
@@ -102,86 +457,67 @@ var productCount;
 var name = 'Taylor';
 var x = 2.2;
 var y = 4;
-z = 50;
             </div>
         </div>
 
         <p>
         An important concept to grasp in JavaScript is that of <em>dynamic typing</em>. Unlike its namesake Java,
-        JavaScript usually does not concern itself with the type of its variables until the last possible moment. This
-        last moment ends up being during runtime. The advantage is that the JavaScript programmer can just declare variables
-        with the keyword <strong>var</strong> without worrying about defining the exact type. As long as the operations on
-        the types are allowed, the JavaScript engine will happily execute your code.
+        JavaScript usually does not concern itself with the type of its variables until the last possible moment,
+        which ends up being at runtime. The advantage is that the JavaScript programmer can just declare variables
+        with the keyword <code>var</code> without worrying about writing out the exact type. This proves immensely
+        helpful when passing around arbitrary objects. Since JavaScript doesn't need to define a class describing the
+        data, a lot of typing can be saved.
         </p>
 
         <p>
-        Variables in JavaScript are declared with the <strong>var</strong> keyword, regardless of type.
+        Since variables in JavaScript are dynamically typed and not checked until runtime, you can do some things that
+        would certainly be prohibited in many statically typed languages:
         </p>
 
-        <div class="example code">
+        <figure class="example code">
 <strong>JavaScript</strong>
 
 var x;
-var y = 5;
-var z = "abc";
-        </div>
+x = 1;
+x = "abc";
+x = function(){};
+            <figcaption>The same variable can switch between any and all the types in JavaScript.</figcaption>
+        </figure>
 
         <p>
-        Object types are declared the same way:
-        </p>
-
-        <div class="example code">
-<strong>JavaScript</strong>
-
-var address = {
-    number: 1234,
-    street: 'Main',
-    city: 'New York City'
-};
-        </div>
-
-        <p>
-        And even functions:
-        </p>
-
-        <div class="example code">
-<strong>JavaScript</strong>
-
-var add = function(x, y){
-    return x + y;
-};
-        </div>
-
-        <p>
-        All functions are objects in JavaScript, which is why that works.
+        The dynamic typing checked at runtime lets us assign pretty much any value to the same variable.
         </p>
 
         <aside>
             <h3>Side note</h3>
 
             <p>
-            Those fluent in C#
-            might be thinking they have nothing to worry about since the C# language has the <strong>var</strong> keyword, but
-            they should note that C# is still statically typed and that the var keyword just allows type inferrance. The
-            <strong>dynamic</strong> keyword in C# is much more like <strong>var</strong> in JavaScript.
+            Those familiar with C#
+            might be thinking this will be simple since C# language has the <code>var</code> keyword, but
+            they should remember that the <code>var</code> keyword in C# uses static type detection. Once a
+            var has been assigned in C#, the type can't change (classes implementing the same interface excepted).
+            The <code>dynamic</code> keyword in C#, however is very similar to the <code>var</code> in JavaScript.
             </p>
 
-            <div class="example code">
+            <figure class="example code">
 <strong>C#</strong>
 
 dynamic x;   // allowed in C#,     examined at runtime
-var y;       // not allowed in C#, no type can be inferred at compile time
-            </div>
-            <p class="caption">In C#, the dynamic and var keywords do vastly different things. People moving to JavaScript
-            need to beware of making assumptions with regards to syntax.</p>
+var y;       // not allowed in C#, no type can be inferred at compile time (assignment required)
+
+var z = 5;   // allowed, but now variable is locked to the Integer type
+z = "abc";   // error, integer type expected
+                <figcaption>In C#, the dynamic and var keywords do vastly different things. People moving to JavaScript
+                need to be aware of making assumptions with regards to syntax.</figcaption>
+            </figure>
         </aside>
 
         <p>
-        The primary pitfall with dynamic typing is getting your types mixed up. Because types are not checked, you can do
+        The primary pitfall with dynamic typing is getting your types mixed up by accident. Because types are not checked, you can do
         things like try to get the length property of a Number type or call the string uppercase function on a Boolean type.
         </p>
 
-        <div class="example code">
+        <figure class="example code">
 <strong>JavaScript</strong>
 
 function add (x1, x2){
@@ -191,16 +527,16 @@ function add (x1, x2){
 add(1, 2);                // allowed, returns 3
 add("goal", "keeper");    // allowed, returns "goalkeeper"
 add(1, "keeper");         // allowed, returns "1keeper"
-        </div>
-        <p class="caption">This behavior is bizzare to someone used to static typing. The number being added to the string will
-        make more sense when we examine typing more in-depth.</p>
+            <figcaption>This behavior is bizzare to someone used to static typing. The number being added to the string will
+            make more sense when we examine typing more in-depth.</figcaption>
+        </figure>
 
         <p>
         In the example above, JavaScript gladly adds whatever it can in our function. No types are declared (and they can't be!),
         which leads to some strange behavior if you are used to statically typed languages!
         </p>
 
-        <div class="example code">
+        <figure class="example code">
 <strong>JavaScript</strong>
 
 function shortLength (item){
@@ -214,8 +550,8 @@ shortLength({ length: 40 });    // returns 20
 shortLength(true);              // returns NaN
 shortLength();                  // error: item is undefined
 shortLength(null);              // error: item is null
-        </div>
-        <p class="caption">Unintended behavior is usually a side effect of dyanmic typed languages.</p>
+            <figcaption>Unintended behavior is usually a side effect of dynamically typed languages.</figcaption>
+        </figure>
 
         <p>
         You will not know that there is a mistake until the code actually executes at runtime. Another common error along
@@ -230,7 +566,7 @@ shortLength(null);              // error: item is null
         then be able to hint to the developer the proper types to use.
         </p>
 
-        <div class="example code">
+        <figure class="example code">
 <strong>JavaScript</strong>
 
 /**
@@ -242,9 +578,9 @@ shortLength(null);              // error: item is null
 function shortLength (item){
     return item.length / 2;
 }
-        </div>
-        <p class="caption">The annotated function will show hints in editors with enabled functionality. This format
-        is called 'JSDoc'.</p>
+            <figcaption>The annotated function will show hints in some text editors and IDEs. This format
+            is called 'JSDoc'.</figcaption>
+        </figure>
 
         <p>
         It is possible to also manually check the types in JavaScript and even to throw errors, but in practice, both
@@ -254,7 +590,7 @@ function shortLength (item){
         programmers tend to let runtime errors catch most mistakes.
         </p>
 
-        <div class="example code">
+        <figure class="example code">
 <strong>JavaScript</strong>
 
 /**
@@ -274,19 +610,26 @@ function shortLength (item){
         throw "'item' parameter is not an Array type";
     }
 }
-        </div>
-        <p class="caption">The type checked version of the function adds a lot of weight, but it does stop unintended behavior.</p>
+            <figcaption>The type checked version of the function adds a lot of weight, but serves to stop unintended behavior. This can help
+            keep code side effects at bay.</figcaption>
+        </figure>
 
         <p>
         Overall, the JavaScript programmer needs to always keep types at the front of their mind. At first glance, it might
         seem that dynamic typing lets one forget about types and just focus on the code, but in reality, it forces the
-        programmer to be extra vigilent with the code that they type and the assupmtions that they make.
+        programmer to be extra vigilant with the code that they type and the assupmtions that they make.
         </p>
 
     </section>
 
-    <section id="variable-scope">
-        <h2>Variable scope</h2>
+<!--
+
+SCOPE
+
+-->
+
+    <section id="scope">
+        <h2>Scope</h2>
 
         <div class="compares">
             <p>Quick look</p>
@@ -336,7 +679,7 @@ public class Widget {
         <p>
         Scope in JavaScript is important to get right as many errors can be traced back to assuming
         that the scoping works just as it does in C-like languages. Of particular importance is the usage
-        of the <strong>var</strong> keyword and of the global scope.
+        of the <code>var</code> keyword and of the global scope.
         </p>
 
         <h3>The object chain</h3>
@@ -344,7 +687,7 @@ public class Widget {
         <p>
         In JavaScript, anything declared (variables and functions) is scoped to the object that the delcaration belongs to.
         If there is no object, then it gets bound to the global object (and it is then called globally scoped). This should be
-        familiar to programemrs of the C-like languages. The global object on the browser has the name <strong>window</strong>
+        familiar to programemrs of the C-like languages. The global object on the browser has the name <code>window</code>
         and can be referred from anywhere.
         </p>
 
@@ -355,7 +698,7 @@ public class Widget {
         function, all the way back to the global object. Consider the following example:
         </p>
 
-        <div class="example code">
+        <figure class="example code">
 <strong>JavaScript</strong>
 
 var x = 5;                     // global scope
@@ -367,33 +710,33 @@ var CoolThing = function(){    // global scope
     var x = 7;                 // local to HotThing
   };
 };
-        </div>
-        <p class="caption">Scoping examples in JavaScript.</p>
+            <figcaption>Scoping examples in JavaScript.</figcaption>
+        </figure>
 
         <p>
-        In the example, <strong>CoolThing</strong> is a function in the global object. The global object (in the browser)
-        is called <strong>window</strong>. It has two propeties under it, <strong>window.x</strong> and <strong>window.CoolThing</strong>. The CoolThing function has its own properties scoped to it, called <strong>x</strong> and <strong>HotThing</strong>. The code above produces an object chain that looks like this:
+        In the example, <code>CoolThing</code> is a function in the global object. The global object (in the browser)
+        is called <code>window</code>. It has two propeties under it, <code>x</code> and <code>CoolThing</code>. The CoolThing function has its own properties scoped to it, called <code>x</code> and <code>HotThing</code>. The code above produces an object chain that looks like this:
         </p>
 
-        <div class="example code">
+        <figure class="example code">
 window                          Object
    &#8627; x                      Number (5)
    &#8627; CoolThing       Function (Object)
        &#8627; x                  Number (2)
        &#8627; HotThing    Function (Object)
            &#8627; x              Number (7)
-        </div>
-        <p class="caption">The object chain to the prior example.</p>
+            <figcaption>The object chain to the prior example.</figcaption>
+        </figure>
 
         <h3>The <em>var</em> keyword</h3>
 
         <p>
-        When declaring variables in JavaScript, they can be declared with or without the <strong>var</strong> keyword.
-        If the <strong>var</strong> keyword is used, then a new variable is created scoped to the object
+        When declaring variables in JavaScript, they can be declared with or without the <code>var</code> keyword.
+        If the <code>var</code> keyword is used, then a new variable is created scoped to the object
         the variable belongs to. This behaves just like you would expect variable declaration to behave in say, Java.
         </p>
 
-        <div class="example code">
+        <figure class="example code">
 <strong>JavaScript</strong>
 
 var a;         // scoped to global object
@@ -401,57 +744,57 @@ var a;         // scoped to global object
 function(){
     var b;     // scoped to anonymous function
 }
-        </div>
+        </figure>
 
         <p>
-        The tricky part happens if the <strong>var</strong> keyword is not used. The interpreter will first check for a
+        The tricky part happens if the <code>var</code> keyword is not used. The interpreter will first check for a
         locally scoped variable to assign the value to. If none exists, then the parent object is checked, then the parent's parent
         and so on up the chain, until hitting the global object. The first variable it finds with the matching name will be
         assigned the value. If no assignment is possible (i.e., the name has not been used anywhere up the chain), then
         the interpreter will create a new <em>globally</em> scoped variable and assign it.
         </p>
 
-        <div class="example code">
+        <figure class="example code">
 <strong>JavaScript</strong>
 
 var Pie = function(){
     x = 2;
 };
-        </div>
+        </figure>
 
         <p>
-        In the example above, <strong>Pie</strong> is a function bound to the global object. When the function declaration begins
+        In the example above, <code>Pie</code> is a function bound to the global object. When the function declaration begins
         to be interpreted, the object chain looks like this:
         </p>
 
-        <div class="example code">
+        <figure class="example code">
 window                    Object
    &#8627; Pie       Function (Object)
-        </div>
+        </figure>
 
         <p>
         The interpreter will do the following when executing the <i>x = 2;</i> line:
         </p>
 
         <ol>
-            <li>The variable declaration does not have the <strong>var</strong> keyword.</li>
-            <li>Check the object that the declaration belongs to for the <strong>x</strong> variable.</li>
-            <li>It does not have an existing variable <strong>x</strong>.</li>
+            <li>The variable declaration does not have the <code>var</code> keyword.</li>
+            <li>Check the object that the declaration belongs to for the <code>x</code> variable.</li>
+            <li>It does not have an existing variable <code>x</code>.</li>
             <li>Next check the parent of the object, which is the global object.</li>
             <li>The variable is not declared here either.</li>
-            <li>Can't go any higher in the object chain, so create a new variable called <strong>x</strong> and bind it to the global object.</li>
+            <li>Can't go any higher in the object chain, so create a new variable called <code>x</code> and bind it to the global object.</li>
         </ol>
 
         <p>
         The final object chain will now look like this:
         </p>
 
-        <div class="example code">
+        <figure class="example code">
 window                    Object
    &#8627; Pie       Function (Object)
    &#8627; x                Number (2)
-        </div>
-        <p class="caption">Note that the 'x' variable ended up scoped to the global object instead of to the Pie function.</p>
+            <figcaption>Note that the 'x' variable ended up scoped to the global object instead of to the Pie function.</figcaption>
+        </figure>
 
         <p>
         This behavior, if the JavaScript programmer does not know it well, leads to countless errors. Global variables can
@@ -460,12 +803,190 @@ window                    Object
         </p>
 
         <p>
-        As a best practice, always delcare local variables with the <strong>var</strong> keyword.
+        As a best practice, always delcare local variables with the <code>var</code> keyword.
         </p>
     </section>
 
-    <section id="variable-ssignment">
-        <h2>Variable Assignment</h2>
+<!--
+
+MODULES
+
+-->
+
+    <section id="modules">
+        <h2>Modules</h2>
+
+        <div class="compares">
+            <div class="example code compare java">
+<strong>Java</strong>
+
+
+            </div>
+
+            <div class="example code compare c-sharp">
+<strong>C#</strong>
+
+
+            </div>
+
+            <div class="example code compare javascript">
+<strong>JavaScript</strong>
+
+
+            </div>
+        </div>
+        <p>Quick look</p>
+
+    </section>
+
+<!--
+
+DUCK TYPING
+
+-->
+
+    <section id="duck-typing">
+        <h2>Duck Typing</h2>
+
+        <div class="compares">
+            <div class="example code compare java">
+<strong>Java</strong>
+
+public interface Renderable {
+    void render();
+}
+
+public class Cat implements Renderable {
+    @Override
+    public void render(){
+        // draw a kitty
+    }
+}
+
+public class Dog implements Renderable {
+    @Override
+    public void render(){
+        // draw a dog
+    }
+}
+
+public class Program {
+    public void draw(Renderable entity){
+        entity.render();
+    }
+
+    public void run(){
+        Cat c = new Cat();
+        Dog d = new Dog();
+
+        this.draw(c);
+        this.draw(d);
+    }
+}
+            </div>
+
+            <div class="example code compare c-sharp">
+<strong>C# - with interfaces</strong>
+
+interface IRenderable {
+    void render();
+}
+
+class Cat : IRenderable {
+    public void render(){
+        // draw a kitty
+    }
+}
+
+class Dog : IRenderable {
+    public void render(){
+        // draw a dog
+    }
+}
+
+class Program {
+    public void draw(IRenderable entity){
+        entity.render();
+    }
+
+    public void run(){
+        Cat c = new Cat();
+        Dog d = new Dog();
+
+        this.draw(c);
+        this.draw(d);
+    }
+}
+            </div>
+
+            <div class="example code compare c-sharp">
+<strong>C# - with dynamic</strong>
+
+class Cat {
+    public void render(){
+        // draw a kitty
+    }
+}
+
+class Dog {
+    public void render(){
+        // draw a dog
+    }
+}
+
+class Program {
+    public void draw(dynamic entity){
+        entity.render();
+    }
+
+    public void run(){
+        Cat c = new Cat();
+        Dog d = new Dog();
+
+        this.draw(c);
+        this.draw(d);
+    }
+}
+            </div>
+
+            <div class="example code compare javascript">
+<strong>JavaScript</strong>
+
+var Cat = function(){};
+Cat.prototype.render = function(){
+    // draw a kitty
+};
+
+var Dog = function(){};
+Dog.prototype.render = function(){
+    // draw a dog
+};
+
+var Program = function(){};
+Program.prototype.draw = function(entity){
+  entity.render();
+};
+
+Program.prototype.run = function(){
+   var c = new Cat();
+   var d = new Dog();
+
+   this.draw(c);
+   this.draw(d);
+};
+            </div>
+        </div>
+
+    </section>
+
+<!--
+
+TYPE COERCION
+
+-->
+
+    <section id="type-coercion">
+        <h2>Type Coercion</h2>
 
         <div class="compares">
             <div class="example code compare java">
@@ -475,13 +996,12 @@ int x = 2;
 float y = 4.5F;
 boolean isFun = true;
 String letters = "abc";
-final Function<Integer, Integer> myFunc = (x) -> x*x;
 
 x = 4;
 x = "a";
 // compile error, mis-matched types
 
-int z = x + y + isFun + letters + myFunc;
+int z = x + y + isFun + letters;
 // compile error, mis-matched types
             </div>
 
@@ -491,8 +1011,7 @@ int z = x + y + isFun + letters + myFunc;
 var x = 2;
 var y = 4.5f;
 var isFun = true;
-var letters = "abc";
-Func<int, int> myFunc = x => x*x;
+var letters = "abc"; = (x) => x*x;
 
 x = 4;
 x = "a";
@@ -522,8 +1041,14 @@ var z = x + y + isFun + letters + myFunc;
 
     </section>
 
-    <section id="object-definition">
-        <h2>Object definition</h2>
+<!--
+
+OBJECT PROTOTYPES
+
+-->
+
+    <section id="object-prototypes">
+        <h2>Object Prototypes</h2>
 
         <div class="compares">
             <div class="example code compare java">
@@ -569,8 +1094,314 @@ var Point = function(){
 };
             </div>
         </div>
-        <p>Quick look</p>
 
     </section>
+
+<!--
+
+FIRST CLASS FUNCTIONS
+
+-->
+
+    <section id="first-class-functions">
+        <h2>First-class Functions</h2>
+
+        <div class="compares">
+            <div class="example code compare java">
+<strong>Java 8</strong>
+
+Function&lt;Integer, Integer&gt; square = (x) -&gt; x * x;
+
+BiFunction&lt;Function&lt;Integer, Integer&gt;, Integer, Integer&gt; doubleApply = (fn, x) -&gt; fn.apply(fn.apply(x));
+
+int result = doubleApply.apply(square, 8);  //4096
+
+            </div>
+
+            <div class="example code compare c-sharp">
+<strong>C# 3.0</strong>
+
+Func&lt;int, int&gt; square = (x) =&gt; x * x;
+
+Func&lt;Func&lt;int, int&gt;, int, int&gt; doubleApply = (fn, x) =&gt; fn(fn(x));
+
+var result = doubleApply(square, 8);       // 4096
+
+            </div>
+
+            <div class="example code compare javascript">
+<strong>JavaScript</strong>
+
+var square = function(x){ return x * x; };
+
+var doubleApply = function(fn, x){
+  return fn(fn(x));
+};
+
+var result = doubleApply(square, 8);       // 4096
+
+            </div>
+        </div>
+
+        <p>
+        Though the usage of first-class functions (and lambda syntax in general) is
+        rare among Java and C# developers, it is central to JavaScript. JavaScript tends to be written in a more functional
+        style than these other languages, so you definitely want to get your functional programming down.
+        </p>
+
+        <aside>
+            <h3>Side note</h3>
+
+            <p>
+            Don't worry if you're new to functional programming! If you are totally unfamiliar with the syntax above, even if
+            you have been programming C# or Java for ages, then you are not alone. Functional programming has never been the focus
+            of most OOP languages (and many of them only got functional features later). This means that there are many people
+            who are quite used to programming in a purely OOP style.
+            </p>
+
+            <p>
+            If you go through this section you will see how simple functional programming is and maybe even incorporate it
+            into your own code! C# gained functional programming in C# 3.0 and Java was late to the game with functional styles
+            in Java 8. Compare this to languages like JavaScript, Scala, and F# that were functional from the very beginning.
+            </p>
+        </aside>
+
+        <p>
+        Languages with first-class functions treat functions like any other variable. They can be assigned, passed around, and called.
+        This allows a high degree of power as you can step outside of the object-oriented paradigm and model systems more accurately.
+        Consider the example of filtering a list of objects so that only those that are red get selected. A typical OOP programmer might
+        try the following:
+        </p>
+
+        <figure class="example code">
+<strong>JavaScript</strong>
+
+var getRedItems = function(list)
+    var newList = [];
+
+    for(var i=0; i&lt;list.length; i++){
+        var item = list[i];
+
+        if (item.color === 'red'){
+            newList.push(item);
+        }
+    }
+
+    return newList;
+};
+
+var myRedList = getRedItems(myList);
+            <figcaption>An OOP programmer might filter items like this.</figcaption>
+        </figure>
+
+        <p>
+        It works, but it isn't very robust or flexible. If we want to filter yellow items, the code gets duplicated a lot. If we want to
+        filter yellow and red items it gets trickier. What happens when we need to filter yellow items that are not round but weigh more than 10 pounds?
+        </p>
+
+        <p>
+        If we could just build different filters and pass them into a function that iterates over the list, things would be easier. It would be functional.
+        It would be even better if we didn't have to make a bunch of objects and classes and fill out lists and iterate over things.
+        </p>
+
+        <p>
+        The idea behind functional programming is to treat everything as a mathmatical function, with strictly defined inputs and outputs. As an example, for
+        our color filters, we ideally take in one item and reject or accept it right there. Then we take all these filter functions and pass them into some other
+        function that iterates over each item. It might look like this:
+        </p>
+
+           <figure class="example code">
+<strong>JavaScript</strong>
+
+var myRedList = myList.filter(function(element){
+    return element.color === 'red';
+});
+            <figcaption>A functional programmer would filter items like so. Note that we pass a function in as a parameter!</figcaption>
+        </figure>
+
+        <p>
+        Our filter function isn't even set to a variable, we just pass it straight into the function parameters. This is a key
+        feature of first-class functions! JavaScript has some other handy functions for operating on arrays in this manner too:
+        </p>
+
+           <figure class="example code">
+<strong>JavaScript</strong>
+
+var grandTotal = myList.reduce(function(x1, x2){
+    return x1 + x2;
+});
+            <figcaption>This is a quick and easy way to sum up an array of values.</figcaption>
+        </figure>
+
+        <p>
+        We can also perform arbitrary transformations on data:
+        </p>
+
+           <figure class="example code">
+<strong>JavaScript</strong>
+
+var vectorLengths  = myList.map(function(v){
+    return Math.sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z));
+});
+            <figcaption>Given an array of 3d vectors, this will give a new array filled with the lengths of those vectors.</figcaption>
+        </figure>
+
+        <p>
+        Our functions can all be chained with each other as well to make some interesting transformations on data:
+        </p>
+
+           <figure class="example code">
+<strong>JavaScript</strong>
+
+var sumOfShortVectors = myList.map(function(v){
+    return Math.sqrt((v.x * v.x) + (v.y * v.y) + (v.z * v.z));
+}).filter(function(v){
+    return v &lt; 6;
+}).reduce(function(v1, v2){
+    return v1 + v2;
+});
+            <figcaption>Given an array of 3d vectors, this will first find the length of each vector, then pick the ones with length less than 6,
+            and finally, sum together the lengths.</figcaption>
+        </figure>
+
+        <p>
+        Now we will do something more complex to really show some functional power. We will have a list of items that we needs
+        to find the taxes for. For the example here, yellow items are considered to weigh 1.5 times more than other colors.
+        The items get taxed at $0.23 a pound, plus a $3.00 flat rate. Finally, round items are tax free, no matter what.
+        Lets find our total tax we pay, functional style:
+        </p>
+
+           <figure class="example code">
+<strong>JavaScript</strong>
+
+var things = [
+  {color: 'yellow', weight: 1.8, shape: 'round'},
+  {color: 'red',    weight: 2.7, shape: 'square'},
+  {color: 'blue',   weight: 7.7, shape: 'square'},
+  {color: 'yellow', weight: 6.1, shape: 'square'}
+];
+
+var totalTax = things.map(function(e){
+    return function(w, c, s){
+        // returns weight multiplier given color
+        var wc = function(){
+            return (c === 'yellow' ? 1.5 : 1.0);
+        };
+
+        // returns weight with multiplier applied
+        var wm = function(){
+            return w * wc();
+        };
+
+        // returns tax given weight
+        var tw = function(mw){
+            return 3 + (mw * 0.23);
+        };
+
+        // returns tax for modded weight
+        var tmw = function(){
+            return tw(wm());
+        };
+
+        // returns tax given shape
+        var tc = function(){
+            return (s === 'round' ? 0 : tmw());
+        };
+
+        return tc();
+    }(e.weight, e.color, e.shape);
+}).reduce(function(x1, x2){
+    return x1 + x2;
+});
+
+// total: 13.4965
+
+            <figcaption>A functional programmer would filter items like so.</figcaption>
+        </figure>
+
+        <p>
+        It can take a bit to get used to functional programming, but the payoffs are big. Here, we take
+        advantage of first-class functions in order to compartmentalize functions. Each function is responsible for doing one thing.
+        This allows us to easily verify the logic without writing tons of unit tests for a bunch of edge cases. Each function
+        is obvious in what it does and can be mathematically proven.
+        </p>
+
+        <p>
+        That example was intentionally extreme to show the power of thinking in a functional way. In reality, a good
+        JavaScript programmer will combine elements of functional programming and object oriented programming to produce
+        good solutions to problems.
+        </p>
+
+    </section>
+
+<!--
+
+CLOSURES
+
+-->
+
+    <section id="closures">
+        <h2>Closures</h2>
+
+        <div class="compares">
+            <div class="example code compare java">
+<strong>Java 8</strong>
+
+Function<Integer, Function<Integer, Integer>> a = (x) -> (y) -> x * y;
+Function<Integer, Integer> b = a.apply(2);
+int c = b.apply(5);
+
+// evaluates to 10
+
+            </div>
+
+            <div class="example code compare c-sharp">
+<strong>C# 3.0</strong>
+
+Func<int, Func<int, int>> a = (x) => (y) => x * y;
+
+var b = a(2);
+var c = b(5);
+
+// evaluates to 10
+
+            </div>
+
+            <div class="example code compare javascript">
+<strong>JavaScript</strong>
+
+function a(x){
+    return function(y){
+        return x * y;
+    }
+}
+
+var b = a(2);
+var c = b(5);
+
+// evaluates to 10
+
+            </div>
+        </div>
+
+        <p>
+        Closures are something that is somewhat interesting in the big OOP languages, but vital to JavaScript.
+        Much like with first-class functions, JavaScript uses closures as a central feature when programming idiomatic
+        JavaScript.
+        </p>
+
+    </section>
+</div>
+
+<!-- Google tracker. Feel free to block. -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-65677808-1', 'auto');
+  ga('send', 'pageview');
+</script>
 </body>
 </html>
